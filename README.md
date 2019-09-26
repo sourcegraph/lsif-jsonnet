@@ -31,6 +31,7 @@ Many thanks to these projects.
 
 This was put together quickly to learn LSIF and JSonnet. It is missing many features, for example
 hover results, documentation comments (parser currently discards comments), error handling, the standard library is not covered.
+It has not seen code reviews, so it's highly likely that there are bugs, omissions and oversights. 
 It can serve as a starting point for more production-ready implementations for JSonnet or other languages.
 
 ## Usage
