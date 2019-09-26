@@ -30,5 +30,15 @@ Many thanks to these projects.
 ## Status
 
 This was put together quickly to learn LSIF and JSonnet. It is missing many features, for example
-hover results, documentation comments (parser currently discards comments). It can serve as a starting point for 
-more production-ready implementations for JSonnet or other languages.
+hover results, documentation comments (parser currently discards comments), the standard library is not covered.
+It can serve as a starting point for more production-ready implementations for JSonnet or other languages.
+
+## Usage
+
+- Build the `cmd/lsif-jsonnet` cli the usual way with Go.
+- The cli mimics the flags of the `jsonnet` cli, so you can specify `libsonnet` search paths with `-J` and the output
+file with `-o`.
+- Run the cli on your jsonnet file and generate an LSIF data file.
+- You can use the generated LSIF data file in [VSCode](https://code.visualstudio.com) with the LSIF plugin or when running a
+  [Sourcegraph](https://docs.sourcegraph.com/user/code_intelligence/lsif) instance. Feel free to fork and use the
+  [test-jsonnet-lsif](https://github.com/uwedeportivo/test-jsonnet-lsif) repo as your test code.
