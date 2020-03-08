@@ -15,10 +15,10 @@ expr
     | '[' ( elems+=expr (',' elems+=expr)* )? ','? ']'               # Array
     | '[' expr ','? forspec+ ']'                                     # ArrayComp
     | expr '.' ID                                                    # Index
-    | expr '[' expr ']'                                              # Index
+    | expr '[' expr ']'                                              # IndexExpr
     | expr '[' startIdx=expr? ':' endIdx=expr? (':' step=expr? )? ']'  # Slice
     | SUPER . ID                                                     # IndexSuper
-    | SUPER '[' expr ']'                                             # IndexSuper
+    | SUPER '[' expr ']'                                             # IndexSuperExpr
     | expr '(' args? ')' TAILSTRICT?                                 # Apply
     | ID                                                             # Var
     | IF expr THEN expr ( ELSE expr )?                               # IfThenElse

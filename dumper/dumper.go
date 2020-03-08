@@ -30,7 +30,7 @@ func NewDumper(projectRoot string, w io.Writer) *Dumper {
 	}
 }
 
-func (dmpr *Dumper) DumpProject(info *protocol.ToolInfo, ll *refs.Listener) error {
+func (dmpr *Dumper) DumpProject(info *protocol.ToolInfo, lls []*refs.Listener) error {
 	_, err := dmpr.emitMetaData("file://"+dmpr.projectRoot, info)
 	if err != nil {
 		return fmt.Errorf(`emit "metadata": %w`, err)
@@ -45,9 +45,11 @@ func (dmpr *Dumper) DumpProject(info *protocol.ToolInfo, ll *refs.Listener) erro
 		return fmt.Errorf(`emit "begin": %w`, err)
 	}
 
-	err = dmpr.dumpListener(ll, proID)
-	if err != nil {
-		return err
+	for _, ll := range lls {
+		err = dmpr.dumpListener(ll, proID)
+		if err != nil {
+			return err
+		}
 	}
 
 	_, err = dmpr.emitEndEvent("project", proID)

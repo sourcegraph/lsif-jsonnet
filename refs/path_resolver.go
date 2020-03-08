@@ -9,7 +9,7 @@ type PathResolver struct {
 	basePaths []string
 }
 
-func exists(path string) (bool, error) {
+func PathExists(path string) (bool, error) {
 	_, err := os.Stat(path)
 	if err == nil {
 		return true, nil
@@ -49,7 +49,7 @@ func (pr *PathResolver) Resolve(path string) (string, error) {
 	for _, bp := range pr.basePaths {
 		candidate := filepath.Join(bp, path)
 
-		ex, err := exists(candidate)
+		ex, err := PathExists(candidate)
 		if err != nil {
 			return "", err
 		}

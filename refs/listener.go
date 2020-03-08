@@ -30,11 +30,6 @@ func ParseFile(path string, pathResolver *PathResolver) (*Listener, error) {
 }
 
 func ParseData(data []byte, path string, pathResolver *PathResolver) (*Listener, error) {
-	data, err := ioutil.ReadFile(path)
-	if err != nil {
-		return nil, err
-	}
-
 	is := antlr.NewInputStream(string(data))
 
 	lexer := parser.NewJsonnetLexer(is)
@@ -88,7 +83,7 @@ func (ll *Listener) EnterFunctionBind(ctx *parser.FunctionBindContext) {
 	obj.Inner = scope
 }
 
-func (ll *Listener) ExitFunctionBind(ctx *parser.FunctionBindContext) {
+func (ll *Listener) ExitFunctionBind(*parser.FunctionBindContext) {
 	ll.currentScope = ll.currentScope.Parent()
 }
 
@@ -109,7 +104,7 @@ func (ll *Listener) EnterFunctionField(ctx *parser.FunctionFieldContext) {
 }
 
 // ExitFunctionField is called when production FunctionField is exited.
-func (ll *Listener) ExitFunctionField(ctx *parser.FunctionFieldContext) {
+func (ll *Listener) ExitFunctionField(*parser.FunctionFieldContext) {
 	ll.currentScope = ll.currentScope.Parent()
 }
 
@@ -167,7 +162,7 @@ func (ll *Listener) addDeclaration(token antlr.Token, declType string) *types.De
 	return obj
 }
 
-func (ll *Listener) ExitValueBind(ctx *parser.ValueBindContext) {
+func (ll *Listener) ExitValueBind(*parser.ValueBindContext) {
 	ll.currentScope = ll.currentScope.Parent()
 }
 
@@ -177,7 +172,7 @@ func (ll *Listener) EnterVar(ctx *parser.VarContext) {
 	_, decl := ll.currentScope.LookupParent(id.GetText(), pos)
 
 	if decl != nil {
-		decl.Uses = append(decl.Uses, types.Use{pos, ll.file})
+		decl.Uses = append(decl.Uses, types.Use{StartPos: pos, File: ll.file})
 	}
 }
 
@@ -197,14 +192,14 @@ func (ll *Listener) EnterFunction(ctx *parser.FunctionContext) {
 	ll.currentScope = scope
 }
 
-func (ll *Listener) ExitFunction(ctx *parser.FunctionContext) {
+func (ll *Listener) ExitFunction(*parser.FunctionContext) {
 	ll.currentScope = ll.currentScope.Parent()
 }
 
 func (ll *Listener) EnterIndex(ctx *parser.IndexContext) {
 	id := ctx.ID()
 	pos := types.NewPos(id.GetSymbol())
-	expr := ctx.Expr(0)
+	expr := ctx.Expr()
 
 	switch v := expr.(type) {
 	case *parser.VarContext:
@@ -214,7 +209,7 @@ func (ll *Listener) EnterIndex(ctx *parser.IndexContext) {
 			fieldDecl := decl.Inner.Lookup(id.GetText())
 
 			if fieldDecl != nil {
-				fieldDecl.Uses = append(fieldDecl.Uses, types.Use{pos, ll.file})
+				fieldDecl.Uses = append(fieldDecl.Uses, types.Use{StartPos: pos, File: ll.file})
 			}
 		}
 	default:
