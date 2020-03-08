@@ -75,6 +75,12 @@ func (s *BaseJsonnetListener) EnterUnaryExpr(ctx *UnaryExprContext) {}
 // ExitUnaryExpr is called when production UnaryExpr is exited.
 func (s *BaseJsonnetListener) ExitUnaryExpr(ctx *UnaryExprContext) {}
 
+// EnterIndexExpr is called when production IndexExpr is entered.
+func (s *BaseJsonnetListener) EnterIndexExpr(ctx *IndexExprContext) {}
+
+// ExitIndexExpr is called when production IndexExpr is exited.
+func (s *BaseJsonnetListener) ExitIndexExpr(ctx *IndexExprContext) {}
+
 // EnterArray is called when production Array is entered.
 func (s *BaseJsonnetListener) EnterArray(ctx *ArrayContext) {}
 
@@ -110,6 +116,12 @@ func (s *BaseJsonnetListener) EnterAssert(ctx *AssertContext) {}
 
 // ExitAssert is called when production Assert is exited.
 func (s *BaseJsonnetListener) ExitAssert(ctx *AssertContext) {}
+
+// EnterIndexSuperExpr is called when production IndexSuperExpr is entered.
+func (s *BaseJsonnetListener) EnterIndexSuperExpr(ctx *IndexSuperExprContext) {}
+
+// ExitIndexSuperExpr is called when production IndexSuperExpr is exited.
+func (s *BaseJsonnetListener) ExitIndexSuperExpr(ctx *IndexSuperExprContext) {}
 
 // EnterSlice is called when production Slice is entered.
 func (s *BaseJsonnetListener) EnterSlice(ctx *SliceContext) {}

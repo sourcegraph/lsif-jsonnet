@@ -857,21 +857,8 @@ func (s *IndexContext) GetRuleContext() antlr.RuleContext {
 	return s
 }
 
-func (s *IndexContext) AllExpr() []IExprContext {
-	var ts = s.GetTypedRuleContexts(reflect.TypeOf((*IExprContext)(nil)).Elem())
-	var tst = make([]IExprContext, len(ts))
-
-	for i, t := range ts {
-		if t != nil {
-			tst[i] = t.(IExprContext)
-		}
-	}
-
-	return tst
-}
-
-func (s *IndexContext) Expr(i int) IExprContext {
-	var t = s.GetTypedRuleContext(reflect.TypeOf((*IExprContext)(nil)).Elem(), i)
+func (s *IndexContext) Expr() IExprContext {
+	var t = s.GetTypedRuleContext(reflect.TypeOf((*IExprContext)(nil)).Elem(), 0)
 
 	if t == nil {
 		return nil
@@ -954,6 +941,59 @@ func (s *UnaryExprContext) EnterRule(listener antlr.ParseTreeListener) {
 func (s *UnaryExprContext) ExitRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(JsonnetListener); ok {
 		listenerT.ExitUnaryExpr(s)
+	}
+}
+
+type IndexExprContext struct {
+	*ExprContext
+}
+
+func NewIndexExprContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *IndexExprContext {
+	var p = new(IndexExprContext)
+
+	p.ExprContext = NewEmptyExprContext()
+	p.parser = parser
+	p.CopyFrom(ctx.(*ExprContext))
+
+	return p
+}
+
+func (s *IndexExprContext) GetRuleContext() antlr.RuleContext {
+	return s
+}
+
+func (s *IndexExprContext) AllExpr() []IExprContext {
+	var ts = s.GetTypedRuleContexts(reflect.TypeOf((*IExprContext)(nil)).Elem())
+	var tst = make([]IExprContext, len(ts))
+
+	for i, t := range ts {
+		if t != nil {
+			tst[i] = t.(IExprContext)
+		}
+	}
+
+	return tst
+}
+
+func (s *IndexExprContext) Expr(i int) IExprContext {
+	var t = s.GetTypedRuleContext(reflect.TypeOf((*IExprContext)(nil)).Elem(), i)
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IExprContext)
+}
+
+func (s *IndexExprContext) EnterRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(JsonnetListener); ok {
+		listenerT.EnterIndexExpr(s)
+	}
+}
+
+func (s *IndexExprContext) ExitRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(JsonnetListener); ok {
+		listenerT.ExitIndexExpr(s)
 	}
 }
 
@@ -1279,6 +1319,50 @@ func (s *AssertContext) ExitRule(listener antlr.ParseTreeListener) {
 	}
 }
 
+type IndexSuperExprContext struct {
+	*ExprContext
+}
+
+func NewIndexSuperExprContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *IndexSuperExprContext {
+	var p = new(IndexSuperExprContext)
+
+	p.ExprContext = NewEmptyExprContext()
+	p.parser = parser
+	p.CopyFrom(ctx.(*ExprContext))
+
+	return p
+}
+
+func (s *IndexSuperExprContext) GetRuleContext() antlr.RuleContext {
+	return s
+}
+
+func (s *IndexSuperExprContext) SUPER() antlr.TerminalNode {
+	return s.GetToken(JsonnetParserSUPER, 0)
+}
+
+func (s *IndexSuperExprContext) Expr() IExprContext {
+	var t = s.GetTypedRuleContext(reflect.TypeOf((*IExprContext)(nil)).Elem(), 0)
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IExprContext)
+}
+
+func (s *IndexSuperExprContext) EnterRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(JsonnetListener); ok {
+		listenerT.EnterIndexSuperExpr(s)
+	}
+}
+
+func (s *IndexSuperExprContext) ExitRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(JsonnetListener); ok {
+		listenerT.ExitIndexSuperExpr(s)
+	}
+}
+
 type SliceContext struct {
 	*ExprContext
 	startIdx IExprContext
@@ -1434,16 +1518,6 @@ func (s *IndexSuperContext) SUPER() antlr.TerminalNode {
 
 func (s *IndexSuperContext) ID() antlr.TerminalNode {
 	return s.GetToken(JsonnetParserID, 0)
-}
-
-func (s *IndexSuperContext) Expr() IExprContext {
-	var t = s.GetTypedRuleContext(reflect.TypeOf((*IExprContext)(nil)).Elem(), 0)
-
-	if t == nil {
-		return nil
-	}
-
-	return t.(IExprContext)
 }
 
 func (s *IndexSuperContext) EnterRule(listener antlr.ParseTreeListener) {
@@ -1863,7 +1937,7 @@ func (p *JsonnetParser) expr(_p int) (localctx IExprContext) {
 		}
 
 	case 7:
-		localctx = NewIndexSuperContext(p, localctx)
+		localctx = NewIndexSuperExprContext(p, localctx)
 		p.SetParserRuleContext(localctx)
 		_prevctx = localctx
 		{
@@ -2377,7 +2451,7 @@ func (p *JsonnetParser) expr(_p int) (localctx IExprContext) {
 				}
 
 			case 12:
-				localctx = NewIndexContext(p, NewExprContext(p, _parentctx, _parentState))
+				localctx = NewIndexExprContext(p, NewExprContext(p, _parentctx, _parentState))
 				p.PushNewRecursionContext(localctx, _startState, JsonnetParserRULE_expr)
 				p.SetState(152)
 

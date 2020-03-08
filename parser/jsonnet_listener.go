@@ -35,6 +35,9 @@ type JsonnetListener interface {
 	// EnterUnaryExpr is called when entering the UnaryExpr production.
 	EnterUnaryExpr(c *UnaryExprContext)
 
+	// EnterIndexExpr is called when entering the IndexExpr production.
+	EnterIndexExpr(c *IndexExprContext)
+
 	// EnterArray is called when entering the Array production.
 	EnterArray(c *ArrayContext)
 
@@ -52,6 +55,9 @@ type JsonnetListener interface {
 
 	// EnterAssert is called when entering the Assert production.
 	EnterAssert(c *AssertContext)
+
+	// EnterIndexSuperExpr is called when entering the IndexSuperExpr production.
+	EnterIndexSuperExpr(c *IndexSuperExprContext)
 
 	// EnterSlice is called when entering the Slice production.
 	EnterSlice(c *SliceContext)
@@ -143,6 +149,9 @@ type JsonnetListener interface {
 	// ExitUnaryExpr is called when exiting the UnaryExpr production.
 	ExitUnaryExpr(c *UnaryExprContext)
 
+	// ExitIndexExpr is called when exiting the IndexExpr production.
+	ExitIndexExpr(c *IndexExprContext)
+
 	// ExitArray is called when exiting the Array production.
 	ExitArray(c *ArrayContext)
 
@@ -160,6 +169,9 @@ type JsonnetListener interface {
 
 	// ExitAssert is called when exiting the Assert production.
 	ExitAssert(c *AssertContext)
+
+	// ExitIndexSuperExpr is called when exiting the IndexSuperExpr production.
+	ExitIndexSuperExpr(c *IndexSuperExprContext)
 
 	// ExitSlice is called when exiting the Slice production.
 	ExitSlice(c *SliceContext)
