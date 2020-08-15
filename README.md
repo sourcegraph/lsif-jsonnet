@@ -1,4 +1,4 @@
-# Language Server Indexing Format Implementation for JSonnet
+# JSonnet LSIF indexer ![](https://img.shields.io/badge/status-development-yellow)
 
 🚨 This implementation is still in very early stage and follows the latest LSIF specification closely.
 
