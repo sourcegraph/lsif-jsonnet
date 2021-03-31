@@ -9,10 +9,11 @@ import (
 	"path/filepath"
 	"strings"
 
-	flag "github.com/spf13/pflag"
 	"lsif-jsonnet/dumper"
 	"lsif-jsonnet/protocol"
 	"lsif-jsonnet/refs"
+
+	flag "github.com/spf13/pflag"
 )
 
 const version = "1.0.0"
