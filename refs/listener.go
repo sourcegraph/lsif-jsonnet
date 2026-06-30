@@ -2,7 +2,7 @@ package refs
 
 import (
 	"fmt"
-	"io/ioutil"
+	"os"
 
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"lsif-jsonnet/parser"
@@ -21,7 +21,7 @@ type Listener struct {
 }
 
 func ParseFile(path string, pathResolver *PathResolver) (*Listener, error) {
-	data, err := ioutil.ReadFile(path)
+	data, err := os.ReadFile(path)
 	if err != nil {
 		return nil, err
 	}
