@@ -183,7 +183,7 @@ func (dmpr *Dumper) nextID() int {
 	return dmpr.id
 }
 
-func (dmpr *Dumper) emit(v interface{}) error {
+func (dmpr *Dumper) emit(v any) error {
 	return dmpr.encoder.Encode(v)
 }
 

@@ -1,6 +1,6 @@
 module lsif-jsonnet
 
-go 1.13
+go 1.26.4
 
 require (
 	github.com/antlr/antlr4 v0.0.0-20190922154701-7982187134a6
